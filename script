@@ -1,0 +1,46 @@
+#David Ruiz
+#social media @viajatech
+
+import tkinter as tk
+from tkinter import ttk
+import hashlib
+
+def generate_hashes():
+    name = name_entry.get()
+    if name:
+        md5_hash = hashlib.md5(name.encode()).hexdigest()
+        sha1_hash = hashlib.sha1(name.encode()).hexdigest()
+        sha256_hash = hashlib.sha256(name.encode()).hexdigest()
+        sha512_hash = hashlib.sha512(name.encode()).hexdigest()
+        result_label.config(text=f'MD5: {md5_hash}\nSHA-1: {sha1_hash}\nSHA-256: {sha256_hash}\nSHA-512: {sha512_hash}')
+    else:
+        result_label.config(text='Por favor, ingrese un nombre.')
+
+# Crear la ventana principal
+root = tk.Tk()
+root.title('Generador de Hashes')
+
+# Crear y configurar el frame principal
+frame = ttk.Frame(root, padding='10 10 10 10')
+frame.grid(row=0, column=0, sticky=(tk.W, tk.E, tk.N, tk.S))
+
+# Crear widgets
+name_label = ttk.Label(frame, text='Ingrese el nombre:')
+name_entry = ttk.Entry(frame, width=30)
+generate_button = ttk.Button(frame, text='Generar Hashes', command=generate_hashes)
+result_label = ttk.Label(frame, text='', justify='left')
+
+# Ubicar widgets en la grid
+name_label.grid(row=0, column=0, sticky=tk.W, pady=5)
+name_entry.grid(row=0, column=1, pady=5)
+generate_button.grid(row=1, column=0, columnspan=2, pady=5)
+result_label.grid(row=2, column=0, columnspan=2, pady=5)
+
+# Configurar redimensionamiento de la ventana
+root.columnconfigure(0, weight=1)
+root.rowconfigure(0, weight=1)
+frame.columnconfigure(0, weight=1)
+frame.columnconfigure(1, weight=1)
+
+# Iniciar el loop principal de la GUI
+root.mainloop()
